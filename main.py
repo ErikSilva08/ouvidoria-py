@@ -7,6 +7,7 @@
 6) Sair do sistema
 '''
 from operacoesbd import *
+from service import *
 opcao = 1
 
 conexao = criarConexao('127.0.0.1', 'root','root','ouvidoriaBD')
@@ -17,14 +18,7 @@ while opcao != 7:
     opcao = int(input("Digite a opção escolhida:"))
 
     if opcao == 1: #Listar
-        manifestacaoListar = listarBancoDados(conexao, "select * from manifestacoes")
-
-        if len(manifestacaoListar) > 0:
-            for index in manifestacaoListar:
-                print(index[0], "-", index[1], "-", index[2], "-", index[3])
-
-        else:
-            print("Nenhuma manifestação disponível")
+        listarManifestacao(conexao)
 
     elif opcao == 2: #Buscar pelo tipo
         tipo = int(
