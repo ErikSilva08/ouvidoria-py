@@ -58,42 +58,16 @@ while opcao != 7:
 
         print('Manifestacao adicionada com sucesso!')
 
-    elif opcao == 4:  #Quantidade
-        consultaManifestacoes = 'select count(*) from manifestacoes'
-        manifestacoes = listarBancoDados(conexao, consultaManifestacoes)
-        quantidadeManifestacao = manifestacoes[0][0]
-
-        if len(manifestacoes) > 0:
-            print(quantidadeManifestacao, "manifestações disponiveis")
-
-        else:
-            print('Nenhuma manifestação disponivel')
-
+    elif opcao == 4: #Quantidade
+        quantidadeManifestacoes(conexao)
 
     elif opcao == 5: #Buscar
-        codigoBuscar = int(input('Digite o codigo da manifestacao:'))
-
-        consultaListagem = 'select * from manifestacoes where codigo = %s'
-        valores = [codigoBuscar]
-        manifestacoes = listarBancoDados(conexao, consultaListagem, valores)
-
-        if len(manifestacoes) > 0:
-            for index in manifestacoes:
-                print(index[0], "-", index[1], "-", index[2], "-", index[3])
-        else:
-            print('Não tem manifestacoes disponiveis')
+        codigoPesquisado = int(input("Insira o código da manifestação: "))
+        buscarManifestacao(conexao)
 
     elif opcao == 6: #Excluir
-        codigoRemover = int(input('Digite o codigo pra remover: '))
-
-        excluir = 'delete from manifestacoes where codigo = %s'
-        valores = [codigoRemover]
-        linhhasAfetadas = excluirBancoDados(conexao, excluir, valores)
-
-        if linhhasAfetadas > 0:
-            print('Manifestacao removida com sucesso!')
-        else:
-            print("Não tem manifestações disponiveis com o codigo informado!")
+        removerManif = int(input("Insira o código da manifestação para removê-la: "))
+        removerManifestacao(conexao)
 
     elif opcao == 7:
         print("Saindo do sistema!")
