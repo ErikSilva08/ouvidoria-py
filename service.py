@@ -10,6 +10,43 @@ def listarManifestacao(conexao):
     else:
         print("Nenhuma manifestação disponível")
 
+def pesquisarTipo (conexao):
+    tipo = int(
+        input("Selecione o tipo da manifestação a ser pesquisada \n1) Reclamação \n2) Sugestão \n3) Feedback\n"))
+
+    if tipo > 0 and tipo <= 3:
+
+        if tipo == 1:
+            consultaListagemTipo = 'select * from manifestacoes where tipo like "recla%"'
+            manifestacoes = listarBancoDados(conexao, consultaListagemTipo)
+            for index in manifestacoes:
+                print(index[0], "-", index[1], "-", index[2], "-", index[3])
+
+        elif tipo == 2:
+            consultaListagemTipo = 'select * from manifestacoes where tipo like "suge%"'
+            manifestacoes = listarBancoDados(conexao, consultaListagemTipo)
+            for index in manifestacoes:
+                print(index[0], "-", index[1], "-", index[2], "-", index[3])
+
+        elif tipo == 3:
+            consultaListagemTipo = 'select * from manifestacoes where tipo like "feed%"'
+            manifestacoes = listarBancoDados(conexao, consultaListagemTipo)
+            for index in manifestacoes:
+                print(index[0], "-", index[1], "-", index[2], "-", index[3])
+
+    else:
+        print("Opção indisponivel")
+
+def adidicionarManifestacao(conexao):
+    perguntaNome = input("Digite seu nome: ")
+    perguntaManifestacao = input("Digite sua manifestacao: ")
+    perguntaTipo = input("Qual o tipo da sua manifestação: ")
+
+    manifestacaoInserir = "insert into manifestacoes (nome,manifestacao,tipo) values (%s,%s,%s);"
+    valores = [perguntaNome, perguntaManifestacao, perguntaTipo]
+    insertNoBancoDados(conexao, manifestacaoInserir, valores)
+    print('Manifestacao adicionada com sucesso!')
+
 def quantidadeManifestacoes(conexao):
     consultaManifestacoes = 'select count(*) from manifestacoes'
     qntManif = listarBancoDados(conexao, consultaManifestacoes)
