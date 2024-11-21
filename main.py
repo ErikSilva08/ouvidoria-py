@@ -1,16 +1,8 @@
-'''
-1) Listagem das manifestações
-2) Criar uma nova manifestação
-3) Exibir quantidade de manifestações
-4) Pesquisar uma manifestação por codigo
-5) Excluir uma manifestação
-6) Sair do sistema
-'''
 from operacoesbd import *
 from service import *
 opcao = 1
 
-conexao = criarConexao('127.0.0.1', 'root','root','ouvidoriaBD')
+conexao = criarConexao('127.0.0.1:3306', 'root','74755043','ouvidoriaBD')
 
 while opcao != 7:
     print("\nSeja bem vindo a ouvidoria da Universidade XYZ \nOpções:")
@@ -21,21 +13,26 @@ while opcao != 7:
         listarManifestacao(conexao)
 
     elif opcao == 2: #Buscar pelo tipo
-        pesquisarTipo (conexao)
+        tipo = int(input("Selecione o tipo da manifestação a ser pesquisada \n1) Reclamação \n2) Sugestão \n3) Feedback\n"))
+        pesquisarTipo (conexao,tipo)
 
     elif opcao == 3: #Criar
-        adidicionarManifestacao(conexao)
+        perguntaNome = input("Digite seu nome: ")
+        perguntaManifestacao = input("Digite sua manifestacao: ")
+        perguntaTipo = input("Qual o tipo da sua manifestação: ")
+
+        adidicionarManifestacao(conexao,perguntaNome,perguntaManifestacao,perguntaTipo)
         
     elif opcao == 4: #Quantidade
         quantidadeManifestacoes(conexao)
 
     elif opcao == 5: #Buscar
         codigoPesquisado = int(input("Insira o código da manifestação: "))
-        buscarManifestacao(conexao)
+        buscarManifestacao(conexao,codigoPesquisado)
 
     elif opcao == 6: #Excluir
         removerManif = int(input("Insira o código da manifestação para removê-la: "))
-        removerManifestacao(conexao)
+        removerManifestacao(conexao,removerManif)
 
     elif opcao == 7:
         print("Saindo do sistema!")

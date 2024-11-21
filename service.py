@@ -3,17 +3,14 @@ from operacoesbd import *
 def listarManifestacao(conexao):
     manifestacaoListar = listarBancoDados(conexao, "select * from manifestacoes")
 
-    if len(manifestacaoListar) > 0:
+    if len(manifestacaoListar) > 0: #Se a quantidade de manifestaçoes for maior que 0
         for index in manifestacaoListar:
             print(index[0], "-", index[1], "-", index[2], "-", index[3])
 
     else:
         print("Nenhuma manifestação disponível")
 
-def pesquisarTipo (conexao):
-    tipo = int(
-        input("Selecione o tipo da manifestação a ser pesquisada \n1) Reclamação \n2) Sugestão \n3) Feedback\n"))
-
+def pesquisarTipo (conexao,tipo):
     if tipo > 0 and tipo <= 3:
 
         if tipo == 1:
@@ -37,11 +34,7 @@ def pesquisarTipo (conexao):
     else:
         print("Opção indisponivel")
 
-def adidicionarManifestacao(conexao):
-    perguntaNome = input("Digite seu nome: ")
-    perguntaManifestacao = input("Digite sua manifestacao: ")
-    perguntaTipo = input("Qual o tipo da sua manifestação: ")
-
+def adidicionarManifestacao(conexao,perguntaNome,perguntaManifestacao,perguntaTipo):
     manifestacaoInserir = "insert into manifestacoes (nome,manifestacao,tipo) values (%s,%s,%s);"
     valores = [perguntaNome, perguntaManifestacao, perguntaTipo]
     insertNoBancoDados(conexao, manifestacaoInserir, valores)
@@ -54,18 +47,18 @@ def quantidadeManifestacoes(conexao):
     for b in qntManif:
         if b[0] == 0:
             print("Nenhuma manifestação registrada no sistema.")
-        elif b[0] == 1:
+        elif b[0] == 1: #Caso tenha apenas uma manifestaçao
             print("Apenas uma manifestação registrada no sistema.")
-        elif b[0] > 1:
+        elif b[0] > 1: #Caso tenham varias manifestaçoes
             print(f"{b[0]} manifestações registradas no sistema.")
 
-def buscarManifestacao(conexao):
+def buscarManifestacao(conexao,codigoPesquisado):
     qntManif = listarBancoDados(conexao, "select count(codigo) from manifestacoes")
     for count in qntManif:
-        if count[0] == 0:
+        if count[0] == 0: #Se a quantidade de manifestaçoes for 0
             print("Nenhuma manifestação registrada no sistema. ")
         else:
-            resultado = -1
+            resultado = -1 #Entrar no While
 
             while resultado < 1:
                 listarManifestacao(conexao)
@@ -81,13 +74,13 @@ def buscarManifestacao(conexao):
                         print(f"{c[1]} - {c[2]} - {c[3]}")
                         break
 
-def removerManifestacao(conexao):
+def removerManifestacao(conexao,removerManif):
     qntManif = listarBancoDados(conexao, "select count(codigo) from manifestacoes")
     for count in qntManif:
-        if count[0] == 0:
+        if count[0] == 0: #Se a quantidade de manifestaçoes for 0
             print("Nenhuma manifestação registrada no sistema. ")
         else:
-            manifRemovid = -1
+            manifRemovid = -1 #Entrar no While
 
             while manifRemovid < 1:
                 listarManifestacao(conexao)
