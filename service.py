@@ -10,34 +10,62 @@ def listarManifestacao(conexao):
     else:
         print("Nenhuma manifestação disponível")
 
-def pesquisarTipo (conexao,tipo):
-    if tipo > 0 and tipo <= 3:
+def pesquisarTipo (conexao,tipo): #Metodo para pesquisar por tipo
+    if tipo > 0 and tipo <= 3: #Limitar se o tipo está dentro do intervalo válido
 
         if tipo == 1:
-            consultaListagemTipo = 'select * from manifestacoes where tipo like "recla%"'
+            consultaListagemTipo = 'select * from manifestacoes where tipo like "Recla%"' #puxar no banco de dados determinada manifestacao pelo tipo selecionado
             manifestacoes = listarBancoDados(conexao, consultaListagemTipo)
-            for index in manifestacoes:
-                print(index[0], "-", index[1], "-", index[2], "-", index[3])
+            quantidadeTipo = 'select count(tipo) from manifestacoes where tipo like "Recla%"' #conferir a quantidade de manifestacao por tipo
+            if len(quantidadeTipo) > 0:
+                for index in manifestacoes:
+                    print(index[0], "-", index[1], "-", index[2], "-", index[3])
+            else:
+                print("Não tem nenhuma manifestaçao disponivel pelo tipo informado")
 
         elif tipo == 2:
-            consultaListagemTipo = 'select * from manifestacoes where tipo like "suge%"'
+            consultaListagemTipo = 'select * from manifestacoes where tipo like "Suge%"' #puxar no banco de dados determinada manifestacao pelo tipo selecionado
             manifestacoes = listarBancoDados(conexao, consultaListagemTipo)
-            for index in manifestacoes:
-                print(index[0], "-", index[1], "-", index[2], "-", index[3])
+            quantidadeTipo = 'select count(tipo) from manifestacoes where tipo like "Suge%"' #conferir a quantidade de manifestacao por tipo
+            if len(quantidadeTipo) > 0:
+                for index in manifestacoes:
+                    print(index[0], "-", index[1], "-", index[2], "-", index[3])
+                print("Não tem nenhuma manifestaçao disponivel pelo tipo informado")
+            else:
+                print("Não tem nenhuma manifestaçao disponivel pelo tipo informado")
 
         elif tipo == 3:
-            consultaListagemTipo = 'select * from manifestacoes where tipo like "feed%"'
+            consultaListagemTipo = 'select * from manifestacoes where tipo like "Feed%"' #puxar no banco de dados determinada manifestacao pelo tipo selecionado
             manifestacoes = listarBancoDados(conexao, consultaListagemTipo)
-            for index in manifestacoes:
-                print(index[0], "-", index[1], "-", index[2], "-", index[3])
+            quantidadeTipo = 'select count(tipo) from manifestacoes where tipo like "Feed%"' #conferir a quantidade de manifestacao por tipo
+            if len(quantidadeTipo) > 0:
+                for index in manifestacoes:
+                    print(index[0], "-", index[1], "-", index[2], "-", index[3])
+            else:
+                print("Não tem nenhuma manifestaçao disponivel pelo tipo informado")
 
     else:
         print("Opção indisponivel")
 
-def adidicionarManifestacao(conexao,perguntaNome,perguntaManifestacao,perguntaTipo):
-    manifestacaoInserir = "insert into manifestacoes (nome,manifestacao,tipo) values (%s,%s,%s);"
-    valores = [perguntaNome, perguntaManifestacao, perguntaTipo]
-    insertNoBancoDados(conexao, manifestacaoInserir, valores)
+def adidicionarManifestacao(conexao,perguntaNome,perguntaManifestacao,perguntaTipo,):
+
+    if perguntaTipo > 0 and perguntaTipo <=3:  #Limitar se o Perguntatipo está dentro do intervalo válido
+        if perguntaTipo == 1:
+            manifestacaoInserir = "insert into manifestacoes (nome,manifestacao,tipo) values (%s,%s,%s);"
+            valores = [perguntaNome, perguntaManifestacao, "Reclamação"] #completa o tipo da manifestacao com a opcao selecionada
+            insertNoBancoDados(conexao, manifestacaoInserir, valores)
+        elif perguntaTipo == 2:
+            manifestacaoInserir = "insert into manifestacoes (nome,manifestacao,tipo) values (%s,%s,%s);"
+            valores = [perguntaNome, perguntaManifestacao, "Sugestaçao"] #completa o tipo da manifestacao com a opcao selecionada
+            insertNoBancoDados(conexao, manifestacaoInserir, valores)
+        elif perguntaTipo == 3:
+            manifestacaoInserir = "insert into manifestacoes (nome,manifestacao,tipo) values (%s,%s,%s);"
+            valores = [perguntaNome, perguntaManifestacao, "Feedback"] #completa o tipo da manifestacao com a opcao selecionada
+            insertNoBancoDados(conexao, manifestacaoInserir, valores)
+    else:
+        print("Opçao Invalido")
+
+
     print('Manifestacao adicionada com sucesso!')
 
 def quantidadeManifestacoes(conexao):

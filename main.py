@@ -30,10 +30,9 @@ while opcao != 7:
 
 
     elif opcao == 3:  # Criar1
-
         perguntaNome = input("Digite seu nome: ")
         perguntaManifestacao = input("Digite sua manifestacao: ")
-        perguntaTipo = input("Qual o tipo da sua manifestação: ")
+        perguntaTipo =  int(input("Selecione o tipo da manifestação a ser adicionada: \n1) Reclamação \n2) Sugestão \n3) Feedback\n"))
         adidicionarManifestacao(conexao, perguntaNome, perguntaManifestacao, perguntaTipo)
 
 
