@@ -54,19 +54,22 @@ def adidicionarManifestacao(conexao,perguntaNome,perguntaManifestacao,perguntaTi
             manifestacaoInserir = "insert into manifestacoes (nome,manifestacao,tipo) values (%s,%s,%s);"
             valores = [perguntaNome, perguntaManifestacao, "Reclamação"] #completa o tipo da manifestacao com a opcao selecionada
             insertNoBancoDados(conexao, manifestacaoInserir, valores)
+            print('Manifestacao adicionada com sucesso!')
         elif perguntaTipo == 2:
             manifestacaoInserir = "insert into manifestacoes (nome,manifestacao,tipo) values (%s,%s,%s);"
             valores = [perguntaNome, perguntaManifestacao, "Sugestaçao"] #completa o tipo da manifestacao com a opcao selecionada
             insertNoBancoDados(conexao, manifestacaoInserir, valores)
+            print('Manifestacao adicionada com sucesso!')
         elif perguntaTipo == 3:
             manifestacaoInserir = "insert into manifestacoes (nome,manifestacao,tipo) values (%s,%s,%s);"
             valores = [perguntaNome, perguntaManifestacao, "Feedback"] #completa o tipo da manifestacao com a opcao selecionada
             insertNoBancoDados(conexao, manifestacaoInserir, valores)
+            print('Manifestacao adicionada com sucesso!')
     else:
         print("Opçao Invalido")
 
 
-    print('Manifestacao adicionada com sucesso!')
+
 
 def quantidadeManifestacoes(conexao):
     consultaManifestacoes = 'select count(*) from manifestacoes'
