@@ -5,8 +5,8 @@ def criarConexao(endereco, usuario, senha, bancodedados):
     try:
         return mysql.connector.connect(
             host=endereco,
-            user=usuario,
             password=senha,
+            user=usuario,
             database=bancodedados
         )
     except mysql.connector.Error as err:

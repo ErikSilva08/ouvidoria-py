@@ -53,44 +53,24 @@ def quantidadeManifestacoes(conexao):
             print(f"{b[0]} manifestações registradas no sistema.")
 
 def buscarManifestacao(conexao,codigoPesquisado):
-    qntManif = listarBancoDados(conexao, "select count(codigo) from manifestacoes")
-    for count in qntManif:
-        if count[0] == 0: #Se a quantidade de manifestaçoes for 0
-            print("Nenhuma manifestação registrada no sistema. ")
+        consultaListagem = 'select * from manifestacoes where codigo = %s'
+        valores = [codigoPesquisado]
+        manifestacoes = listarBancoDados(conexao, consultaListagem, valores)
+
+        if len(manifestacoes) > 0:
+            for index in manifestacoes:
+                print(index[0], "-", index[1], "-", index[2], "-", index[3])
         else:
-            resultado = -1 #Entrar no While
+            print('Não tem manifestacoes disponiveis')
 
-            while resultado < 1:
-                listarManifestacao(conexao)
-                consulta = f"select * from manifestacoes WHERE codigo = {codigoPesquisado} "
-                buscaCodigo = listarBancoDados(conexao, consulta)
-                resultado = len(buscaCodigo)
 
-                if resultado < 1:
-                    print("Nenhuma manifestação disponível com o código informado. Digite um código válido")
+def removerManifestacao(conexao,codigoRemover):
 
-                else:
-                    for c in buscaCodigo:
-                        print(f"{c[1]} - {c[2]} - {c[3]}")
-                        break
+        excluir = 'delete from manifestacoes where codigo = %s'
+        valores = [codigoRemover]
+        linhhasAfetadas = excluirBancoDados(conexao, excluir, valores)
 
-def removerManifestacao(conexao,removerManif):
-    qntManif = listarBancoDados(conexao, "select count(codigo) from manifestacoes")
-    for count in qntManif:
-        if count[0] == 0: #Se a quantidade de manifestaçoes for 0
-            print("Nenhuma manifestação registrada no sistema. ")
+        if linhhasAfetadas > 0:
+            print('Manifestacao removida com sucesso!')
         else:
-            manifRemovid = -1 #Entrar no While
-
-            while manifRemovid < 1:
-                listarManifestacao(conexao)
-
-                consulta = "DELETE FROM manifestacoes where codigo = %s"
-                valores = [removerManif]
-                manifRemovid = excluirBancoDados(conexao, consulta, valores)
-
-                if manifRemovid < 1:
-                    print("ERRO! Nenhuma manifestação registrada com o código informado.")
-                else:
-                    print("Manifestação removida com sucesso. ")
-                    break
+            print("Não tem manifestações disponiveis com o codigo informado!")
